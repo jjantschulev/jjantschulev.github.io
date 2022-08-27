@@ -1,0 +1,125 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.js"></script>
+    <script src="sketch.js"></script>
+    <title>Bezier Editor</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        background-color: #101317;
+      }
+
+      h1{
+        text-align: center;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        color: white
+      }
+
+      .code-container {
+        background-color: #282C34;
+        padding: 20px;
+        border-radius: 10px;
+        color: #ABB2BF;
+        font-size: 17px;
+        margin-top: 0;
+        width: 1180px;
+        margin-bottom: 20px;
+        /* display: none; */
+      }
+
+      pre {
+        white-space: pre-wrap;
+      }
+
+      canvas {
+        border-radius: 20px;
+      }
+      canvas:not(:first-child) {
+        margin-left: 20px;
+      }
+
+      #canvas-container {
+        margin-bottom: 20px;
+      }
+      #code {
+        color: #5490ff;
+      }
+
+      button {
+        border:none;
+        border-radius: 10px;
+        padding: 10px 18px;
+        margin: 5px;
+        background-color: #101317;
+        font-size: 18px;
+        transition-duration: 0.1s;
+        color:white;
+        font-weight: bold;
+      }
+
+      .primarybtn {
+        background-color: #0055ff;
+      }
+
+      button:hover {
+        background-color: #000000;
+      }
+      .primarybtn:hover {
+        background-color: #5490ff;
+      }
+
+      .btncont {
+        position: relative;
+        top: 0;
+        right: 0;
+        float: right;
+      }
+
+    </style>
+
+  </head>
+  <body>
+    <main>
+      <h1>Bezier Shape Editor</h1>
+      <div id="canvas-container"></div>
+      <div class="code-container">
+        <div class="btncont">
+          <button onClick="location.reload()">Refresh</button>
+          <button onClick="eval?.(document.getElementById('allCode').innerText)">Preview Code</button>
+          <button onClick="navigator.clipboard.writeText(document.getElementById('allCode').innerText)">Copy Code</button>
+          <button class="primarybtn" onClick="navigator.clipboard.writeText(document.getElementById('code').innerText)">Copy Shapes</button>
+        </div>
+        <code id="allCode" contenteditable="true">
+          <pre>
+const myShapes = <span id="code"></span>
+          
+function setup() {
+    createCanvas(600, 600);
+}
+  
+function draw() {
+    background(245);
+    stroke(0);
+    strokeWeight(2);
+    noFill();
+    translate(width/2, height/2);
+    myShapes.forEach(renderShape);
+}
+          
+function renderShape(shape) {
+    beginShape();
+    vertex(shape[0], shape[1]);
+    for (let i = 2; i < shape.length; i += 6) {
+        bezierVertex(shape[i], shape[i + 1], shape[i + 2], shape[i + 3], shape[i + 4], shape[i + 5]);
+    }
+    endShape(CLOSE);
+}</pre>
+        </code>
+      </div>
+    </main>
+  </body>
+</html>
